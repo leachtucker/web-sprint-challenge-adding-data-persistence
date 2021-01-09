@@ -5,7 +5,16 @@ async function getResources() {
 }
 
 async function insertResource(resource) {
-    return await db('resources').insert(resource);
+    const [ newResourceId ] = await db('resources').insert(resource);
+
+    if (!newResourceId) {
+        Promise.resolve(null);
+    }
+
+    return Promise.resolve({
+        id: newResourceId,
+        ...resource
+    });
 }
 
 module.exports = {

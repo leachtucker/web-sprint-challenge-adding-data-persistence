@@ -5,7 +5,16 @@ async function getTasks() {
 }
 
 async function insertTask(task) {
-    return await db('tasks').insert(task);
+    const [ newTaskId ] = await db('tasks').insert(task);
+
+    if (!newTaskId) {
+        return Promise.resolve(null);
+    }
+
+    return Promise.resolve({
+        id: newTaskId,
+        ...task
+    })
 }
 
 module.exports = {

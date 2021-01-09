@@ -5,7 +5,16 @@ async function getProjects() {
 }
 
 async function insertProject(project) {
-    return await db('projects').insert(project);
+    const [ newProjectId ] = await db('projects').insert(project);
+
+    if (!newProjectId) {
+        return Promise.resolve(null);
+    }
+
+    return Promise.resolve({
+        id: newProjectId,
+        ...project
+    });
 }
 
 module.exports = {
