@@ -1,5 +1,9 @@
 const db = require('../../data/dbConfig');
 
+async function findTask(id) {
+    return await db('tasks').where({ task_id: id });
+}
+
 async function getTasks() {
     return await db('tasks');
 }
@@ -11,13 +15,13 @@ async function insertTask(task) {
         return Promise.resolve(null);
     }
 
-    return Promise.resolve({
-        id: newTaskId,
-        ...task
-    })
+    const [ newTask ] = await findTask(newTaskId);
+
+    return Promise.resolve(newTask);
 }
 
 module.exports = {
+    findTask,
     getTasks,
     insertTask
 }

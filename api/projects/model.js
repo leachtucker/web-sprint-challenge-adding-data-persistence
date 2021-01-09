@@ -1,5 +1,9 @@
 const db = require('../../data/dbConfig');
 
+async function findProject(id) {
+    return await db('projects').where({ project_id: id });
+}
+
 async function getProjects() {
     return await db('projects');
 }
@@ -11,13 +15,13 @@ async function insertProject(project) {
         return Promise.resolve(null);
     }
 
-    return Promise.resolve({
-        id: newProjectId,
-        ...project
-    });
+    const [ newProject ] = await findProject(newProjectId);
+
+    return Promise.resolve(newProject);
 }
 
 module.exports = {
+    findProject,
     getProjects,
     insertProject
 }

@@ -1,5 +1,9 @@
 const db = require('../../data/dbConfig');
 
+async function findResource(id) {
+    return await db('resources').where({ resource_id: id });
+}
+
 async function getResources() {
     return await db('resources');
 }
@@ -11,13 +15,13 @@ async function insertResource(resource) {
         Promise.resolve(null);
     }
 
-    return Promise.resolve({
-        id: newResourceId,
-        ...resource
-    });
+    const [ newResource ] = await findResource(newResourceId);
+
+    return Promise.resolve(newResource);
 }
 
 module.exports = {
+    findResource,
     getResources,
     insertResource
 };
