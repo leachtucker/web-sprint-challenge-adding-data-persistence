@@ -37,5 +37,17 @@ router.get('/:id/resources', (req, res) => {
         });
 })
 
+router.get('/:id/tasks', (req, res) => {
+    const { id } = req.params;
+
+    Projects.getTasks(id)
+        .then(result => {
+            res.status(201).json(result);
+        })
+        .catch(() => {
+            res.status(500).json({ message: "There has been an error with the server." })
+        });
+})
+
 // Export
 module.exports = router;
