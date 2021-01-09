@@ -1,6 +1,6 @@
 const db = require('../../data/dbConfig');
 
-async function findProject(id) {
+async function getProject(id) {
     return await db('projects').where({ project_id: id });
 }
 
@@ -15,13 +15,21 @@ async function insertProject(project) {
         return Promise.resolve(null);
     }
 
-    const [ newProject ] = await findProject(newProjectId);
+    const [ newProject ] = await getProject(newProjectId);
 
     return Promise.resolve(newProject);
 }
 
+async function getResources(id) {
+    return await db('projects_resources as pr')
+        .join('resources as r', 'pr.resource_id', 'r.resource_id')
+        .where({ project_id: id })
+        .select('resource_name', 'resource_description');
+}
+
 module.exports = {
-    findProject,
+    getProject,
     getProjects,
-    insertProject
+    insertProject,
+    getResources
 }

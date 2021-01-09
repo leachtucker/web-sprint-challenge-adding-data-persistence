@@ -25,5 +25,17 @@ router.post('/', (req, res) => {
         })
 })
 
+router.get('/:id/resources', (req, res) => {
+    const { id } = req.params;
+
+    Projects.getResources(id)
+        .then(result => {
+            res.status(201).json(result);
+        })
+        .catch(() => {
+            res.status(500).json({ message: "There has been an error with the server." })
+        });
+})
+
 // Export
 module.exports = router;
