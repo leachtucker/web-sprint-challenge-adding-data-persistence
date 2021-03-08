@@ -1,0 +1,11 @@
+Explain the difference between Relational Databases and SQL.
+	SQL is a relational database management system. SQL is the system used to manage relational databases.
+
+Why do tables need a Primary Key?
+	Tables need at least one unique, non nullable field so that the table can identify and access rows. Primary keys are auto-incrementing integers for ease-of-use.
+
+What is the name given to a table column that references the Primary Key on another table?
+	A foreign key refernces the primary key on another table.
+
+What do we need in order to have a many to many relationship between two tables?
+	In order to have a many-to-many relationship between two tables, you must use a junction or intermediate table.
